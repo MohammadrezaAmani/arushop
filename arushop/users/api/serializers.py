@@ -3,7 +3,6 @@ from rest_framework import serializers
 
 from arushop.users.models import User as UserType
 
-
 User = get_user_model()
 
 

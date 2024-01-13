@@ -75,6 +75,7 @@ class Address(models.Model):
     zipcode = models.CharField(max_length=100)
     place = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.address
@@ -86,3 +87,4 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
+    name = models.CharField(max_length=20, null=True)

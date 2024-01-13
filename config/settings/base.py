@@ -74,6 +74,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # "django.contrib.humanize", # Handy template tags
+    "jet",
     "django.contrib.admin",
     "django.forms",
 ]
@@ -87,10 +88,12 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     "drf_spectacular",
+    "drf_yasg",
 ]
 
 LOCAL_APPS = [
     "arushop.users",
+    "arushop.shop",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

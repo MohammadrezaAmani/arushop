@@ -14,20 +14,14 @@ urlpatterns = [
     path("jet", include("jet.urls")),
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about"),
-    # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
-    # User management
     path("users/", include("arushop.users.urls", namespace="users")),
     path("shop/", include("arushop.shop.urls", namespace="shop")),
     path("accounts/", include("allauth.urls")),
-    # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# API URLS
 urlpatterns += [
-    # API base url
     path("api/", include("config.api_router")),
-    # DRF auth token
     path("auth-token/", obtain_auth_token),
     path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"),
     path(
@@ -38,8 +32,7 @@ urlpatterns += [
 ]
 
 if settings.DEBUG:
-    # This allows the error pages to be debugged during development, just visit
-    # these url in browser to see how these error pages look like.
+    
     urlpatterns += [
         path(
             "400/",

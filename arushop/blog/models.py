@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from markdownfield.models import MarkdownField, RenderedMarkdownField
 from markdownfield.validators import VALIDATOR_STANDARD
-from arushop.shop.models import Product, Category, Comment
+from arushop.shop.models import Product, Category
 from autoslug import AutoSlugField
 
 User = get_user_model()
@@ -31,7 +31,6 @@ class BlogPost(models.Model):
     status = models.CharField(
         _("Status"), max_length=10, choices=(("draft", "Draft"), ("publish", "Publish"))
     )
-    image = models.ImageField(_("Image"), upload_to="blog/%Y/%m/%d", blank=True)
     category = models.ForeignKey(
         Category,
         verbose_name=_("Category"),
@@ -48,6 +47,7 @@ class BlogPost(models.Model):
     likes = models.ManyToManyField(User, related_name="blog_likes", blank=True)
     dislikes = models.ManyToManyField(User, related_name="blog_dislikes", blank=True)
     views = models.ManyToManyField(User, related_name="blog_views", blank=True)
+    # comments = models.ManyToManyField(Comment, related_name="blog_comments", blank=True)
     
     class Meta:
         verbose_name = _("Blog post")
@@ -59,3 +59,19 @@ class BlogPost(models.Model):
 
     def get_absolute_url(self):
         return reverse("blog:post_detail", args=[self.slug])
+
+    @property
+    def views_count(self):
+        return self.views.count()
+    
+    @property
+    def likes_count(self):
+        return self.likes.count()
+    
+    @property
+    def dislikes_count(self):
+        return self.dislikes.count()
+    
+    @property
+    def comments_count(self):
+        return self.comments.count()

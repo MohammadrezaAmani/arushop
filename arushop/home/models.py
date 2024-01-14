@@ -4,7 +4,7 @@ from django.db import models
 from markdownfield.models import MarkdownField, RenderedMarkdownField
 from markdownfield.validators import VALIDATOR_STANDARD
 from arushop.shop.models import Category, Product
-
+from arushop.other.models import Comment, Image
 
 class Slider(models.Model):
     image = models.ImageField(upload_to="slider")

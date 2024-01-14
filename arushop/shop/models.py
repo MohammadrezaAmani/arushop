@@ -4,6 +4,7 @@ from autoslug import AutoSlugField
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
+# from arushop.other.models import Comment, Image
 
 User = get_user_model()
 
@@ -33,24 +34,24 @@ class Product(models.Model):
     def actual_price(self):
         return self.price - (self.price * self.discount / 100)
 
-    @property
-    def rating(self):
-        comments = Comment.objects.filter(product=self)
-        if comments.count() == 0:
-            return 0
-        else:
-            total = 0
-            for comment in comments:
-                total += comment.rate
-            return total / comments.count()
+    # @property
+    # def rating(self):
+    #     comments = Comment.objects.filter(product=self)
+    #     if comments.count() == 0:
+    #         return 0
+    #     else:
+    #         total = 0
+    #         for comment in comments:
+    #             total += comment.rate
+    #         return total / comments.count()
 
-    @property
-    def comments(self):
-        return Comment.objects.filter(product=self, reply=None)
+    # @property
+    # def comments(self):
+    #     return Comment.objects.filter(product=self, reply=None)
 
-    @property
-    def count_comments(self):
-        return Comment.objects.filter(product=self).count()
+    # @property
+    # def count_comments(self):
+    #     return Comment.objects.filter(product=self).count()
 
     @property
     def count_likes(self):
@@ -286,42 +287,3 @@ class Order(models.Model):
         return self.address.user
 
 
-class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    rate = models.IntegerChoices("rate", "1 2 3 4 5")
-    comment = models.TextField()
-    reply = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name="replies")
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    name = models.CharField(max_length=20, null=True)
-    likes = models.ManyToManyField(User, related_name="comment_likes", blank=True)
-    dislikes = models.ManyToManyField(User, related_name="comment_dislikes", blank=True)
-
-    def __str__(self):
-        return self.comment
-
-    def is_reply(self):
-        return self.reply != None
-
-    @property
-    def count_likes(self):
-        return self.likes.count()
-
-    @property
-    def count_dislikes(self):
-        return self.dislikes.count()
-
-    @property
-    def comment_rate(self):
-        likes = self.count_likes
-        dislikes = self.count_dislikes
-        return (self.count_likes - self.count_dislikes) / (likes + dislikes) if likes + dislikes != 0 else 0
-
-    @property
-    def count_replies(self):
-        return self.replies.count()
-
-    @property
-    def replies(self):
-        return Comment.objects.filter(reply=self)

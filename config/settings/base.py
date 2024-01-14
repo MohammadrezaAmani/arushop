@@ -20,8 +20,7 @@ LANGUAGE_CODE = "en-us"
 
 LANGUAGES = [
     ('en', _('English')),
-    ('fr-fr', _('French')),
-    ('pt-br', _('Portuguese')),
+    ('fa', _('Persian')),
 ]
 
 SITE_ID = 1
@@ -50,6 +49,8 @@ ROOT_URLCONF = "config.urls"
 
 WSGI_APPLICATION = "config.wsgi.application"
 
+MOST_PORIARITY_APPS = ["markdownfield","jet"]
+
 DJANGO_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -57,7 +58,6 @@ DJANGO_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "jet",
     "django.contrib.admin",
     "django.forms",
 ]
@@ -78,9 +78,11 @@ LOCAL_APPS = [
     "arushop.users",
     "arushop.shop",
     "arushop.home",
+    "arushop.blog",
+    
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = MOST_PORIARITY_APPS + DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIGRATION_MODULES = {"sites": "arushop.contrib.sites.migrations"}
 

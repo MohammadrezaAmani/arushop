@@ -1,14 +1,9 @@
-from django.db import models
 import random
 
-from arushop.shop.models import (
-    Address,
-    Cart,
-    CartItem,
-    Category,
-    Product,
-    Comment,
-)
+from django.db import models
+
+from arushop.shop.models import Category, Product
+
 
 class Slider(models.Model):
     image = models.ImageField(upload_to="slider")
@@ -21,15 +16,16 @@ class Slider(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def random_slider(self, number: int = 1):
         return random.choices(self.objects.all(), k=number)
-    
+
     def get_absolute_url(self):
         return self.link
-    
+
     def get_image(self):
         return self.image.url
+
 
 class Sliders(models.Model):
     sliders = models.ManyToManyField(Slider)
@@ -43,9 +39,10 @@ class Sliders(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     def radnom_slider(self):
         return random.choice(self.sliders.all())
+
 
 class Banner(models.Model):
     image = models.ImageField(upload_to="banner")
@@ -58,15 +55,16 @@ class Banner(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def random_banner(self, number: int = 1):
         return random.choices(self.objects.all(), k=number)
-    
+
     def get_absolute_url(self):
         return self.link
-    
+
     def get_image(self):
         return self.image.url
+
 
 class Banners(models.Model):
     banners = models.ManyToManyField(Banner)
@@ -80,9 +78,10 @@ class Banners(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     def radnom_banner(self):
         return random.choice(self.banners.all())
+
 
 class ShownCategory(models.Model):
     category = models.ManyToManyField(Category)
@@ -92,18 +91,19 @@ class ShownCategory(models.Model):
     end_date = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return self.name
-    
+
     def get_absolute_url(self):
         return self.category.get_absolute_url()
-    
+
     def get_image(self):
         return self.category.image.url
-    
+
     def random_category(self, number: int = 1):
         return random.choices(self.category.all(), k=number)
+
 
 class ShownProduct(models.Model):
     product = models.ManyToManyField(Product)
@@ -113,18 +113,19 @@ class ShownProduct(models.Model):
     end_date = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return self.name
-    
+
     def get_absolute_url(self):
         return self.product.get_absolute_url()
-    
+
     def get_image(self):
         return self.product.image.url
-    
+
     def random_product(self, number: int = 1):
         return random.choices(self.product.all(), k=number)
+
 
 class ShownCategoryProduct(models.Model):
     category = models.ManyToManyField(Category)
@@ -134,18 +135,19 @@ class ShownCategoryProduct(models.Model):
     end_date = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return self.name
-    
+
     def get_absolute_url(self):
         return self.category.get_absolute_url()
-    
+
     def get_image(self):
         return self.category.image.url
-    
+
     def random_category(self, number: int = 1):
         return random.choices(self.category.all(), k=number)
+
 
 class Config(models.Model):
     name = models.CharField(max_length=100)
@@ -153,6 +155,6 @@ class Config(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return self.name

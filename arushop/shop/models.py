@@ -92,11 +92,11 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse("shop:category_detail", args=[self.slug])
-    
+
     @property
     def childs(self):
         return Category.objects.filter(parent=self)
-    
+
     @property
     def expand_childs(self):
         childs = []

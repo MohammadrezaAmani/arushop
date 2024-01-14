@@ -32,7 +32,6 @@ urlpatterns += [
 ]
 
 if settings.DEBUG:
-    
     urlpatterns += [
         path(
             "400/",

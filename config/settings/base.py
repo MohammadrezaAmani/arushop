@@ -82,6 +82,8 @@ LOCAL_APPS = [
     "arushop.search",
     "arushop.faq",
     "arushop.mail",
+    "arushop.payment",
+    
     
     
 ]

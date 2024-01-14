@@ -80,6 +80,7 @@ LOCAL_APPS = [
     "arushop.home",
     "arushop.blog",
     "arushop.search"
+    "arushop.faq"
     
 ]
 

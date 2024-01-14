@@ -75,6 +75,7 @@ class Product(models.Model):
 
 
 class Category(models.Model):
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField()
@@ -91,74 +92,87 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse("shop:category_detail", args=[self.slug])
+    
+    @property
+    def childs(self):
+        return Category.objects.filter(parent=self)
+    
+    @property
+    def expand_childs(self):
+        childs = []
+        for child in self.childs:
+            if child.childs.count() == 0:
+                childs.append(child.expand_childs)
+        childs.append(self.products.all())
+        return childs
 
     @property
     def count_views(self):
         views = 0
-        for product in self.products.all():
+        for product in self.expand_childs:
             views += product.views.count()
         return views
 
     @property
     def views(self):
         views = []
-        for product in self.products.all():
+        for product in self.expand_childs:
             views += list(product.views.all())
         return views
 
     @property
     def count_likes(self):
         likes = 0
-        for product in self.products.all():
+        for product in self.expand_childs:
             likes += product.likes.count()
         return likes
 
     @property
     def likes(self):
         likes = []
-        for product in self.products.all():
+        for product in self.expand_childs:
             likes += list(product.likes.all())
         return likes
 
     @property
     def count_dislikes(self):
         dislikes = 0
-        for product in self.products.all():
+        for product in self.expand_childs:
             dislikes += product.dislikes.count()
         return dislikes
 
     @property
     def dislikes(self):
         dislikes = []
-        for product in self.products.all():
+        for product in self.expand_childs:
             dislikes += list(product.dislikes.all())
         return dislikes
 
     @property
     def count_comments(self):
         comments = 0
-        for product in self.products.all():
+        for product in self.expand_childs:
             comments += product.count_comments
         return comments
 
     @property
     def comments(self):
         comments = []
-        for product in self.products.all():
+        for product in self.expand_childs:
             comments += list(product.comments.all())
         return comments
 
     @property
     def count_orders(self):
         orders = 0
-        for product in self.products.all():
+        for product in self.expand_childs:
             orders += product.count_orders
         return orders
 
     @property
     def orders(self):
         orders = []
-        for product in self.products.all():
+        for product in self.expand_childs:
             orders += list(product.orderitem_set.all())
         return orders
 

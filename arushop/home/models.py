@@ -3,8 +3,10 @@ import random
 from django.db import models
 from markdownfield.models import MarkdownField, RenderedMarkdownField
 from markdownfield.validators import VALIDATOR_STANDARD
-from arushop.shop.models import Category, Product
+
 from arushop.other.models import Comment, Image
+from arushop.shop.models import Category, Product
+
 
 class Slider(models.Model):
     image = models.ImageField(upload_to="slider")
@@ -154,10 +156,10 @@ class Config(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
     about = models.TextField(null=True, blank=True)
-    about = MarkdownField(rendered_field='about_rendered', validator=VALIDATOR_STANDARD,null=True, blank=True)
+    about = MarkdownField(rendered_field="about_rendered", validator=VALIDATOR_STANDARD, null=True, blank=True)
     about_rendered = RenderedMarkdownField(null=True, blank=True)
     site_url = models.CharField(max_length=256, null=True, blank=True)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

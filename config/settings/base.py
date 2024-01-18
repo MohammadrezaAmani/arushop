@@ -3,8 +3,9 @@ Base settings to build other settings files upon.
 """
 import os
 from pathlib import Path
-from django.utils.translation import gettext_lazy as _
+
 import environ
+from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
@@ -19,8 +20,8 @@ TIME_ZONE = "UTC"
 LANGUAGE_CODE = "en-us"
 
 LANGUAGES = [
-    ('en', _('English')),
-    ('fa', _('Persian')),
+    ("en", _("English")),
+    ("fa", _("Persian")),
 ]
 
 SITE_ID = 1
@@ -49,7 +50,7 @@ ROOT_URLCONF = "config.urls"
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-MOST_PORIARITY_APPS = ["markdownfield","jet"]
+MOST_PORIARITY_APPS = ["markdownfield", "jet"]
 
 DJANGO_APPS = [
     "django.contrib.auth",
@@ -72,6 +73,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "drf_spectacular",
     "drf_yasg",
+    "rest_framework_simplejwt",
 ]
 
 LOCAL_APPS = [
@@ -86,8 +88,6 @@ LOCAL_APPS = [
     "arushop.payment",
     "arushop.recommandation_system",
     "arushop.report",
-    
-    
 ]
 
 INSTALLED_APPS = MOST_PORIARITY_APPS + DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -133,6 +133,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "middleware.auth.auth.AuthMiddleware",
 ]
 
 
@@ -155,9 +156,7 @@ MEDIA_URL = "/media/"
 
 TEMPLATES = [
     {
-
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-
         "DIRS": [str(APPS_DIR / "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -242,11 +241,14 @@ SOCIALACCOUNT_FORMS = {"signup": "arushop.users.forms.UserSocialSignupForm"}
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # "rest_framework.authentication.SessionAuthentication",
+        # "rest_framework.authentication.TokenAuthentication",
     ),
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    # "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 100,
 }
 
 CORS_URLS_REGEX = r"^/api/.*$"
@@ -256,4 +258,17 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "Documentation of API endpoints of AruShop",
     "VERSION": "1.0.0",
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
+}
+
+SWAGGER_SETTINGS = {
+   'SECURITY_DEFINITIONS': {
+    #   'Basic': {
+    #         'type': 'basic'
+    #   },
+      'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+      }
+   }
 }

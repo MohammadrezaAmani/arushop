@@ -4,6 +4,7 @@ from autoslug import AutoSlugField
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
+
 # from arushop.other.models import Comment, Image
 
 User = get_user_model()
@@ -285,5 +286,3 @@ class Order(models.Model):
     @property
     def user(self):
         return self.address.user
-
-

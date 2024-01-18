@@ -1,0 +1,3 @@
+curl \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA1NTkwOTE5LCJpYXQiOjE3MDU1OTA2MTksImp0aSI6Ijk5YTM2OGM5YTdiZTRkZTk4MDIzNTcwZWRlZGUyNjdjIiwidXNlcl9pZCI6MX0.7XlaVXqtwxfi9Aaku5BDkdnc26U5-bJyKMyay_KuXco" \
+  http://localhost:8000/shop/me/

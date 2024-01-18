@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 
-from .views import AddressViewSet, CartItemViewSet, CartViewSet, CategoryViewSet, ProductViewSet
+from .views import AddressViewSet, CartItemViewSet, CartViewSet, CategoryViewSet, ProductViewSet, me
 
 app_name = "shop"
 
@@ -14,4 +14,5 @@ router.register(r"category", CategoryViewSet, basename="category")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("me/", me, name="me"),
 ]

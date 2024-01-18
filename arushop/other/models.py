@@ -1,8 +1,9 @@
-from django.db import models
-from django.contrib.auth import get_user_model
-import PIL
-from django.urls import reverse
 import uuid
+
+import PIL
+from django.contrib.auth import get_user_model
+from django.db import models
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -46,23 +47,23 @@ class Comment(models.Model):
     def replies(self):
         return Comment.objects.filter(reply=self)
 
+
 class Image(models.Model):
-    
     image = models.ImageField(upload_to="products", blank=True)
     alt = models.CharField(max_length=256, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return self.product.name
-    
+
     def get_absolute_url(self):
         return reverse("shop:product_detail", args=[self.product.slug])
-    
+
     def thumbnail(self, width: int = 256, height: int = 256, scale: int = None):
         img = PIL.Image.open(self.image)
         if scale:
             width = img.width * scale
             height = img.height * scale
-            return img.resize((width, height), PIL.Image.ANTIALIAS)    
+            return img.resize((width, height), PIL.Image.ANTIALIAS)
         return img.resize((width, height), PIL.Image.ANTIALIAS)

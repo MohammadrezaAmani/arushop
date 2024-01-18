@@ -1,7 +1,5 @@
 
 import rest_framework_simplejwt
-from django.contrib.auth import get_user_model
-from rest_framework import serializers
 from django.contrib.auth.models import AnonymousUser
 
 def get_user(request):
@@ -9,7 +7,6 @@ def get_user(request):
     if not token:
         return AnonymousUser()
     try:
-        AnonymousUser()
         token = token.split(" ")[1]
         token = rest_framework_simplejwt.authentication.JWTAuthentication().get_validated_token(token)
     except rest_framework_simplejwt.exceptions.InvalidToken:

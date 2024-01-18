@@ -25,5 +25,7 @@ class UserViewSet(ModelViewSet):
     
     @action(detail=False)
     def me(self, request):
+        if isinstance(request.user, AnonymousUser):
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         serializer = UserSerializer(request.user, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)

@@ -18,10 +18,10 @@ urlpatterns = [
     path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
 ]
 urlpatterns += [
-    path("jet", include("jet.urls")),
+    # path("jet", include("jet.urls")),
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about"),
-    path(settings.ADMIN_URL, admin.site.urls),
+    path('admin/', admin.site.urls),
     path("users/", include("arushop.users.urls", namespace="users")),
     path("shop/", include("arushop.shop.urls", namespace="shop")),
     path("accounts/", include("allauth.urls")),

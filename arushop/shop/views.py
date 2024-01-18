@@ -4,7 +4,6 @@ from rest_framework import serializers
 from rest_framework.decorators import action, api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Address, Cart, CartItem, Category
@@ -88,7 +87,8 @@ class CartItemViewSet(BaseViewSet):
 
     def get_queryset(self):
         return self.queryset.filter(cart__user=self.request.user)
-    
+
+
 class CategoryViewSet(BaseViewSet):
     serializer_class = CategorySerializer
     queryset = Category.objects.all().order_by("-created")
@@ -99,7 +99,6 @@ class CategoryViewSet(BaseViewSet):
         products = category.products.all()
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
-
 
 
 @api_view(["GET"])

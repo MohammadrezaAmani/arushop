@@ -9,9 +9,11 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework.authtoken.views import obtain_auth_token
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+
 # authentication classes
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+
 urlpatterns = [
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
@@ -21,7 +23,7 @@ urlpatterns += [
     # path("jet", include("jet.urls")),
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about"),
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     path("users/", include("arushop.users.urls", namespace="users")),
     path("shop/", include("arushop.shop.urls", namespace="shop")),
     path("accounts/", include("allauth.urls")),

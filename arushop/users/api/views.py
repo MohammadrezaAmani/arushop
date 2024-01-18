@@ -1,16 +1,17 @@
 from typing import Any
+
 from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework.viewsets import ModelViewSet
 
 from .serializers import UserSerializer
 
 User = get_user_model()
 from django.contrib.auth.models import AnonymousUser
+
 
 class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
@@ -22,7 +23,7 @@ class UserViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=201)
-    
+
     @action(detail=False)
     def me(self, request):
         if isinstance(request.user, AnonymousUser):

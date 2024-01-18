@@ -4,7 +4,6 @@ from django.db import models
 from markdownfield.models import MarkdownField, RenderedMarkdownField
 from markdownfield.validators import VALIDATOR_STANDARD
 
-from arushop.other.models import Comment, Image
 from arushop.shop.models import Category, Product
 
 

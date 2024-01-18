@@ -1,6 +1,6 @@
-
 import rest_framework_simplejwt
 from django.contrib.auth.models import AnonymousUser
+
 
 def get_user(request):
     token = request.META.get("HTTP_AUTHORIZATION", None)

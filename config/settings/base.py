@@ -50,7 +50,7 @@ ROOT_URLCONF = "config.urls"
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-MOST_PORIARITY_APPS = ["markdownfield"]#, "jet"]
+MOST_PORIARITY_APPS = ["markdownfield"]  # , "jet"]
 
 DJANGO_APPS = [
     "django.contrib.auth",
@@ -261,14 +261,10 @@ SPECTACULAR_SETTINGS = {
 }
 
 SWAGGER_SETTINGS = {
-   'SECURITY_DEFINITIONS': {
-    #   'Basic': {
-    #         'type': 'basic'
-    #   },
-      'Bearer': {
-            'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header'
-      }
-   }
+    "SECURITY_DEFINITIONS": {
+        #   'Basic': {
+        #         'type': 'basic'
+        #   },
+        "Bearer": {"type": "apiKey", "name": "Authorization", "in": "header"}
+    }
 }

@@ -1,11 +1,9 @@
-import uuid
-
 from autoslug import AutoSlugField
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 
-# from arushop.other.models import Comment, Image
+from arushop.other.models import Comment, Image
 
 User = get_user_model()
 
@@ -24,6 +22,8 @@ class Product(models.Model):
     likes = models.ManyToManyField(User, related_name="likes", blank=True)
     dislikes = models.ManyToManyField(User, related_name="dislikes", blank=True)
     views = models.ManyToManyField(User, related_name="views", blank=True)
+    comments = models.ManyToManyField(Comment, related_name="comments", blank=True)
+    images = models.ManyToManyField(Image, related_name="images", blank=True)
 
     class Meta:
         ordering = ("-created",)
@@ -180,7 +180,6 @@ class Category(models.Model):
 
 
 class Cart(models.Model):
-    cart_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     date_added = models.DateField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 

@@ -13,4 +13,3 @@ class User(AbstractUser):
     # First and last name do not cover name patterns around the globe
     name = CharField(_("Name of User"), blank=True, max_length=255)
     email = CharField(_("Email"), blank=True, max_length=255, unique=True)
-    username = CharField(_("Phone"), blank=True, max_length=255, unique=True)

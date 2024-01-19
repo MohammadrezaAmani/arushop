@@ -26,6 +26,7 @@ urlpatterns += [
     path("admin/", admin.site.urls),
     path("users/", include("arushop.users.urls", namespace="users")),
     path("shop/", include("arushop.shop.urls", namespace="shop")),
+    path("comment/", include("arushop.other.urls")),
     path("accounts/", include("allauth.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

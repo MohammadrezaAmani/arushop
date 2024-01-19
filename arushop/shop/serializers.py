@@ -1,6 +1,5 @@
 from typing import Any
 
-from django.db.models import F, Sum
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
@@ -30,8 +29,8 @@ class CartSerializer(ModelSerializer):
         items = instance.cartitem_set.filter(active=True)
         data = super().to_representation(instance)
         data["items"] = CartItemSerializer(items, many=True).data
-        data["total"] = items.aggregate(total=Sum(F("product__actual_price") * F("quantity")))["total"]
-        data["discount"] = items.aggregate(total=Sum(F("product__price") * F("quantity")))["total"] - data["total"]
+        # data["total"] = items.aggregate(total=Sum(F("product__actual_price") * F("quantity")))["total"]
+        # data["discount"] = items.aggregate(total=Sum(F("product__price") * F("quantity")))["total"] - data["total"]
         # data['without_discount'] = items.aggregate(total=Sum(F('product__price') * F('quantity')))['total']
         return data
 

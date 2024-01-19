@@ -13,11 +13,24 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer[UserType]):
-    # password = serializers.CharField(write_only=True, required=False)
     class Meta:
         model = User
-        exclude = ["is_staff", "is_superuser", "groups", "user_permissions", "date_joined", "is_active", "last_login"]
-        # fields = '__all__'
+        fields = ["id", "username", "first_name", "last_name"]
+        extra_kwargs = {
+            "url": {
+                "view_name": "api:user-detail",
+                "lookup_field": "username",
+            },
+        }
+
+
+class UserDetailSerializer(serializers.ModelSerializer[UserType]):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ["id", "username", "first_name", "last_name", "password", "last_login", "date_joined"]
+
         extra_kwargs = {
             "url": {
                 "view_name": "api:user-detail",
@@ -38,5 +51,4 @@ class UserSerializer(serializers.ModelSerializer[UserType]):
     def to_representation(self, instance: User) -> Any:
         representation = super().to_representation(instance)
         representation["is_staff"] = instance.is_staff
-        representation.pop("password")
         return representation

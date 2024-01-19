@@ -133,7 +133,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
-    "middleware.auth.auth.AuthMiddleware",
+    # "middleware.auth.auth.AuthMiddleware",
 ]
 
 

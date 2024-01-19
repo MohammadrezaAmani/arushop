@@ -3,12 +3,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
-from django.views.generic import TemplateView
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
-from rest_framework.authtoken.views import obtain_auth_token
 
 # authentication classes
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -20,25 +17,12 @@ urlpatterns = [
     path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
 ]
 urlpatterns += [
-    # path("jet", include("jet.urls")),
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
-    path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about"),
-    path("admin/", admin.site.urls),
-    path("users/", include("arushop.users.urls", namespace="users")),
-    path("shop/", include("arushop.shop.urls", namespace="shop")),
-    path("comment/", include("arushop.other.urls")),
     path("accounts/", include("allauth.urls")),
+    path("admin/", admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [
     path("api/", include("config.api_router")),
-    path("auth-token/", obtain_auth_token),
-    path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"),
-    path(
-        "api/docs/",
-        SpectacularSwaggerView.as_view(url_name="api-schema"),
-        name="api-docs",
-    ),
 ]
 
 if settings.DEBUG:
@@ -65,14 +49,16 @@ if settings.DEBUG:
 
         urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
 
-
+description = """
+این مجموعه API وبسایت فروشگاهی برای شرکت AruShop نوشته شده است.
+استفاده‌ی آموزشی از آن و کدها بلامانع بوده اما حق کپی رایت آن محفوظ است.
+"""
 schema_view = get_schema_view(
     openapi.Info(
-        title="Snippets API",
-        default_version="v1",
-        description="Test description",
-        terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="contact@snippets.local"),
+        title="AruShop API",
+        default_version="v1.4",
+        description=description,
+        contact=openapi.Contact(email="more.amani@yahoo.com"),
         license=openapi.License(name="BSD License"),
     ),
     public=True,

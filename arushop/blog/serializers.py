@@ -16,5 +16,4 @@ class BlogPostSerializer(serializers.ModelSerializer):
             "likes",
             "dislikes",
             "views",
-            "comments",
         ]

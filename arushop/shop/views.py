@@ -1,10 +1,7 @@
-from typing import Any
-
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from rest_framework import status
 from rest_framework.decorators import action, api_view
-from rest_framework.request import Request
 from rest_framework.response import Response
 
 from arushop.other.serializers import CommentSerializer, ImageSerializer
@@ -24,25 +21,15 @@ from .serializers import (
 
 User = get_user_model()
 
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
+from rest_framework.viewsets import GenericViewSet
 
-class ProductViewSet(BaseViewSet):
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+
+class ProductViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     serializer_class = ProductSerializer
     queryset = (
         Product.objects.prefetch_related("likes", "dislikes", "views", "comments", "images").all().order_by("-created")
     )
-
-    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    def update(self, request, *args, **kwargs):
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    def partial_update(self, request, *args, **kwargs):
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    def destroy(self, request, *args, **kwargs):
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
     @action(detail=True, methods=["get"])
     def category(self, request, pk=None):

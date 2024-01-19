@@ -9,7 +9,7 @@ def get_user(request):
     try:
         token = token.split(" ")[1]
         token = rest_framework_simplejwt.authentication.JWTAuthentication().get_validated_token(token)
-    except rest_framework_simplejwt.exceptions.InvalidToken:
+    except:
         return AnonymousUser()
     try:
         user = rest_framework_simplejwt.authentication.JWTAuthentication().get_user(token)
